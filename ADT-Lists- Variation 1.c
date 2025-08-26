@@ -54,6 +54,10 @@ int locate(List L, int data){
     return booly;
 }
 List insertSorted(List L, int data){
+    if(data > L.data[L.count-1]){
+        L =  insertPos(L, data, L.count);//case where data is larger than final
+        return L;
+    }
     for(int i = 0; i < L.count; i++){
         if(data < L.data[i]){
             L =  insertPos(L, data, i);
@@ -91,7 +95,7 @@ int main(){
     printf("\nLocate List: 99 -> %d", locate(L, 99));
     printf("\nLocate List: 777 -> %d", locate(L, 777));
     printf("\nCOUNT: %d", L.count);
-    L = insertSorted(L, 100);
+    L = insertSorted(L, 55);
     printf("\ninsert sorted:\n");
     display(L);
     printf("\nCOUNT: %d", L.count);
@@ -99,4 +103,3 @@ int main(){
     
     
 }
-
