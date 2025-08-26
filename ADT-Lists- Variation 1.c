@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 16
+#define MAX 10
 typedef struct List{
     int data[MAX];
     int count;
@@ -70,7 +70,7 @@ void display(List L){
 
 int main(){
     List L = initialize(L);
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < 5; i++){
         L = insertPos(L, 50 + i*i, i);
     }
     printf("Original Case: \n");
