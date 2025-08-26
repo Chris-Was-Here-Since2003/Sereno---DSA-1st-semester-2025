@@ -35,11 +35,33 @@ List insertPos(List L, int data, int position){
 }
 List deletePos(List L, int position){
     if(L.count==position){
-        
+        L.count--;
+        return L;
     }
+    for(int i = position; i < L.count; i++){//increment till count
+        L.data[i]= L.data[i+1];
+    }
+    L.count--;
+    return L;//works for now
 }
-int locate(List L, int data);
-List insertSorted(List L, int data);
+int locate(List L, int data){
+    int booly = -1;
+    for(int i = 0; i < L.count; i++){
+        if(L.data[i]==data){
+            booly = i;
+        }
+    }
+    return booly;
+}
+List insertSorted(List L, int data){
+    for(int i = 0; i < L.count; i++){
+        if(data < L.data[i]){
+            L =  insertPos(L, data, i);
+            break;
+        }
+    }
+    return L;
+}
 void display(List L){
     for(int i = 0; i < L.count; i++){
         printf("%d -> ", L.data[i]);
@@ -49,14 +71,30 @@ void display(List L){
 int main(){
     List L = initialize(L);
     for(int i = 0; i < 10; i++){
-        L = insertPos(L, 50+i - i*i, i);
+        L = insertPos(L, 50 + i*i, i);
     }
+    printf("Original Case: \n");
     display(L);
     L=insertPos(L, 666, 5);
     L=insertPos(L, 999, 5);
     L=insertPos(L, 777, 5);
-    printf("\n");
+    printf("\nInsert test: \n");
     display(L);//case for insert
+    printf("\nCOUNT: %d", L.count);
+    L = deletePos(L, 5);
+    L = deletePos(L, 5);
+    L = deletePos(L, 5);
+    printf("\nDELETE: \n");
+    display(L);
+    printf("\nCOUNT: %d", L.count);
+    printf("\nLocate List: 114 -> %d", locate(L, 114));
+    printf("\nLocate List: 99 -> %d", locate(L, 99));
+    printf("\nLocate List: 777 -> %d", locate(L, 777));
+    printf("\nCOUNT: %d", L.count);
+    L = insertSorted(L, 100);
+    printf("\ninsert sorted:\n");
+    display(L);
+    printf("\nCOUNT: %d", L.count);
     
     
     
