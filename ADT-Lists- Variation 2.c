@@ -86,7 +86,10 @@ void makeNULL(EPtr L){
 }
 
 int main(){
+    
     EPtr L = (EPtr)malloc(sizeof(Etype));
+    display(L);
+    printf("\n");
     initialize(L);
     for(int i = 0; i < 5; i++){
         insertPos(L, 50 + i*i, i);
@@ -112,7 +115,9 @@ int main(){
     insertSorted(L, 55);
     printf("\ninsert sorted:\n");
     display(L);
-    printf("\nCOUNT: %d", L->count);
-    
-    
+    printf("\nCOUNT: %d\n", L->count);
+    makeNULL(L);
+    display(L);
+    printf("\n");
+    display(L);
 }
