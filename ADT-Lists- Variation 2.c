@@ -15,9 +15,8 @@ void insertPos(EPtr L, int data, int position){
         printf("Array is full");
         return;
     }//case where array is full
-    if(L->count <= position){
-        L->data[L->count] = data;//case where position is greater than count
-        L->count++;
+    if(L->count < position){
+        printf("Invalid insertPos:\n");
         return;
     }//case where position is greater/equal to position
     int temp = data;
@@ -35,6 +34,10 @@ void insertPos(EPtr L, int data, int position){
 }
 void deletePos(EPtr L, int position)
 {
+    if(L->count<=position){
+        printf("Invalid deletePos:\n");
+        return;
+    }
      if(L->count==position){
         L->count--;
         return;
