@@ -28,8 +28,8 @@ int main() {
     List *l = initialize();
     printf("Initiallization + insertion\n");
     insertFirst(l, 24);
-    for(int i = 1; i < 8; i++){
-        insertPos(l, i*i, i);
+    for(int i = 0; i < 8; i++){
+        insertPos(l, i*i, 1);
     }
     display(l);
     printf("\n%d\n", l->count);
@@ -57,12 +57,13 @@ int main() {
     printf("289 is at %d\n", locate(l, 289));
     printf("1000 is at %d\n", locate(l, 1000));
     printf("%d\n", l->count);
+    insertPos(l, 11, 11);
     printf("retrieving...\n");
-    printf("1 is %d\n", retrieve(l, 1));
-    printf("10 is %d\n", retrieve(l, 10));
-    printf("5 is %d\n", retrieve(l, 5));
-    printf("20 is %d\n", retrieve(l, 20));
-    return 0;
+    for(int i = 0; i < 12; i++){
+    printf("%d is %d\n", i, retrieve(l,i));
+    }
+    empty(l);
+    display(l);return 0;
 }
 List* initialize(){
     List * L = (List*)malloc(sizeof(List));
@@ -82,6 +83,7 @@ void empty(List *list){
         free(temp);
         temp = nxt;
     }
+    list->head = NULL;
     list->count = 0;
     free(list);
     
@@ -125,7 +127,7 @@ void insertPos(List *list, int data, int index){
     }
     list->count++;
     Node*temp= list->head;
-    for(int i = 0; i < index; i++){
+    for(int i = 0; i < index-1; i++){
         temp = temp->next;
     }
     new->next = temp->next;
@@ -175,9 +177,9 @@ void deletePos(List *list, int index){
     free(byebye);
 }
 int retrieve(List *list, int index){
-    if(index>list->count){
+    if(index>=list->count){
         printf("Invalid index");
-        return 80084;
+       return 80084;
     }
     Node*temp = list->head;
     for(int i = 0; i < index; i++){
@@ -207,4 +209,3 @@ void display(List *list){
     printf("NULL\n");
 
 }
-
