@@ -66,6 +66,10 @@ int main() {
 }
 List* initialize(){
     List * L = (List*)malloc(sizeof(List));
+    if(L==NULL){
+        printf("Allocation unsuccessful, returning NULL");
+        return NULL;
+    }
     L->head = NULL;
     L->count = 0;
 }
@@ -200,4 +204,5 @@ void display(List *list){
         temp = temp->next;
     }
     printf("NULL\n");
+
 }
