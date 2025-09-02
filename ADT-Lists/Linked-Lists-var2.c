@@ -72,6 +72,7 @@ List* initialize(){
     }
     L->head = NULL;
     L->count = 0;
+    return L;
 }
 void empty(List *list){
     Node *temp  = list->head;
@@ -206,3 +207,4 @@ void display(List *list){
     printf("NULL\n");
 
 }
+
