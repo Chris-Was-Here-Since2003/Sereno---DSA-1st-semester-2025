@@ -28,7 +28,7 @@ display(S);
 
 Stack*initialize(){
     Stack*new = (Stack*)malloc(sizeof(Stack));
-    int top = -1;
+    new->top = -1;
     return new;
 }
 void push(Stack*s, int value){
@@ -62,3 +62,4 @@ void display(Stack*s){
     }
     printf("|");
 }
+
