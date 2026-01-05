@@ -12,14 +12,11 @@ typedef struct head{
     int avail;
 }VHeap;//note to self, avail is index, L is head
 void initialize(VHeap *V){
-    V = (VHeap*)malloc(sizeof(VHeap));
     V->avail = 0;
     for(int i = 0; i < MAX-1; i++){
-        **(V->H[i].next) = i+1;
-        printf("%d\n",   V->H[i].next);
+        V->H[i].next = i+1;
     }
     V->H[MAX-1].next=-1;
-    
 }
 int allocSpace(VHeap* V){
     int ret = V->avail;
@@ -28,6 +25,8 @@ int allocSpace(VHeap* V){
     return ret;
 }
 void deallocSpace(VHeap* V, int index){
+    V->H[index].next = V->avail;
+    V->avail = index;
   return;
     
 }
@@ -64,13 +63,51 @@ void display(int L, VHeap V){
 
 
 int main() {
-    // Write C code here
-    printf("Try programiz.pro\n");
-    VHeap *V;
+    VHeap *V = (VHeap*)malloc(sizeof(VHeap));
     initialize(V);
     int L = -1;
-    insertFirst(&L, V, 3);
-
+    int x;
+    int elem;
     
+    do {
+        printf("\n===== Cursor-Based List (Heap) Menu =====\n");
+        printf("List: ");
+        display(L, *V);
+        printf("\nAvailable Space Index: %d\n", V->avail);
+        printf("\nOperations:\n");
+        printf("1. Insert at beginning\n");
+        printf("2. Insert at end\n");
+        printf("3. Display list\n");
+        printf("4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &x);
+        
+        switch(x) {
+            case 1:
+                printf("Enter value to insert: ");
+                scanf("%d", &elem);
+                insertFirst(&L, V, elem);
+                printf("Inserted %d at beginning\n", elem);
+                break;
+            case 2:
+                printf("Enter value to insert: ");
+                scanf("%d", &elem);
+                insertLast(&L, V, elem);
+                printf("Inserted %d at end\n", elem);
+                break;
+            case 3:
+                printf("Current List: ");
+                display(L, *V);
+                printf("\n");
+                break;
+            case 4:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice\n");
+        }
+    } while(x != 4);
+    
+    free(V);
     return 0;
 }
