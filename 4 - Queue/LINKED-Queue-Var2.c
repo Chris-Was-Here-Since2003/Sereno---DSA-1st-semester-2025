@@ -7,50 +7,49 @@ typedef struct node{
 }Node;
 
 typedef struct{
-    Node*top;
-}Stack;
+    Node*front;
+    Node*rear;
+}Queue;
 
-Stack* initialize();
-void empty(Stack *stack);
-void push(Stack *stack, int value);
-int pop(Stack *stack);
-int peek(Stack *stack);
-void display(Stack *stack);
-
+Queue* initialize();
+void enqueue(Queue *queue, int value);
+int dequeue(Queue *queue);
+bool isEmpty(Queue* queue);
+bool isFull(Queue* q);
+int front(Queue *queue);
+void display(Queue *queue);
 
 int main() {
-    Stack *l = initialize();
+    Queue *Q = initialize();
     for(int i = 0; i < 3; i++){
-        insertLast(l, i*10);
+        enqueue(Q, i*10);
     }
     int x;
     int y;
-    int z;
     do{
         y = 0;
-        z = 0;
-        printf("\n==== Linked List Operations Menu ====\n");
-        printf("Current List: ");
-        display(l);
-        printf("Count: %d\n", l->count);
+        printf("\n==== Queue Operations Menu ====\n");
+        printf("Queue: ");
+        display(Q);
+        printf("\nFront: %d, Rear: %d\n", Q->front->data, Q->rear->data);
         printf("\nWhat to do?\n");
-        printf("1. Push element\n");
-        printf("2. Pop element\n");
-        printf("3. Peek element\n");
+        printf("1. Enqueue element\n");
+        printf("2. Dequeue element\n");
+        printf("3. Peek front element\n");
         printf("4. Exit\n");
         printf("Enter choice: ");
         scanf("%d", &x);
-        switch(x){
+         switch(x){
             case 1:
-                printf("Enter value to push: ");
+                printf("Enter value to enqueue: ");
                 scanf("%d", &y);
-                push(l, y);
+                enqueue(Q, y);
                 break;
             case 2:
-                printf("Popped: %d\n", pop(l));
+                printf("Dequeued: %d\n", dequeue(Q));
                 break;
             case 3:
-                printf("Peeked element: %d\n", peek(l));
+                printf("Front element: %d\n", front(Q));
                 break;
             case 4:
                 printf("Exiting...\n");
@@ -74,31 +73,33 @@ List* initialize(){
     return L;
 }
 
-void push(List *list, int value){
+void enqueue(Queue *queue, int value){
     Node *new = (Node*)malloc(sizeof(Node));
     new->data=value;
-    new->next = list->top;
-    list->top = new;
+    new->next = queue-front;
+    queue->front->next = new;
+
+    queue->rear = new;
 }
 
-int pop(List *list){
-    Node*temp = list->top;
+int dequeue(Queue *queue){
+    Node*temp = queue->front;
     int val = temp->data;
-    list->top = temp->next;
+    queue->front = temp->next;
     free(temp);
     return val;
 }
-int peek(List *list){
-    if(list->top==NULL){
-        printf("List is empty");
+int front(Queue *queue){
+    if(queue->front==NULL){
+        printf("Queue is empty");
         return -1;
     }
-    return list->top->data;
+    return queue->front->data;
 }
 
-void display(List *list){
-    Node*temp  = list->top;
-    for(int i = 0; i < list->count; i++){
+void display(Queue *queue){
+    Node*temp  = queue->front;
+    for(int i = 0; i < queue->count; i++){
         printf("%d->", temp->data);
         temp = temp->next;
     }
