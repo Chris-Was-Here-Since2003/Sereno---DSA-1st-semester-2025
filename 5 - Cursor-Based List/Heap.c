@@ -66,8 +66,8 @@ void delete(int* L, VHeap* V, int elem){
 void deleteAllOccurrence(int* L, VHeap* V, int elem){
     int trav = L;
     while(trav!=-1){
-        if(V.H[trav].elem == elem){
-            delete(V.)
+        if(V.H[V.H[trav].next].elem  == elem){
+            V.H[trav].next = V.H[V.H[trav].next].next;
         }
         trav = V.H[trav].next;//here, value of trav is next
     }

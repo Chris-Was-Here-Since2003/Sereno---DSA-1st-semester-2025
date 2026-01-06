@@ -1,0 +1,129 @@
+BST create(const char*data){
+    
+    printf("Inserted key: \"%s\"\n", data);
+    BST temp = (BST)malloc(sizeof(Node));
+    (temp)->key = (char*)malloc(sizeof(char)*(strlen(data)+1));
+    strcpy((temp)->key,data);
+    (temp)->LC = NULL;
+    (temp)->RC = NULL;
+    return temp;
+}
+void insert(BST *tree, const char *key_data){
+    BST *temp = tree;
+    if((*tree)==NULL){
+        BST*temp = (create(key_data));
+        (*tree) = temp;
+        return;
+    }
+    while((*temp)!=NULL){
+        if(strcmp(key_data, (*temp)->key)<0){
+            
+            if((*temp)->LC==NULL){
+            (*temp)->LC = create(key_data);
+                break;
+            }
+            temp = &((*temp)->LC);
+            continue;
+            
+            //go left
+        }else if(strcmp(key_data, (*temp)->key)>0){
+            
+            if((*temp)->RC==NULL){
+            (*temp)->RC = create(key_data);
+                break;
+            }
+            temp = &((*temp)->RC);
+            continue;
+            
+            //go right
+        }else{
+            printf("Key \"%s\" already exists. Ignoring.\n", key_data);
+            break;
+        }
+    }
+    
+    
+}
+
+void inorderTraversal(BST tree) {
+    if(tree!=NULL){
+    inorderTraversal(tree->LC);
+    printf("\"%s\" ", tree->key);
+    inorderTraversal(tree->RC);
+    }
+}
+
+void preorderTraversal(BST tree) {
+    if(tree!=NULL){
+    printf("\"%s\" ", tree->key);
+    preorderTraversal(tree->LC);
+    preorderTraversal(tree->RC);
+    }
+}
+
+void postorderTraversal(BST tree) {
+    if(tree!=NULL){
+    postorderTraversal(tree->LC);
+    postorderTraversal(tree->RC);
+    printf("\"%s\" ", tree->key);
+    }
+}
+BST minValueNode(BST node) {
+  BST current = node;
+
+  // Find the leftmost leaf
+  while (current && current->LC != NULL){
+    current = current->LC;
+   }
+  return current;
+}
+int search(BST root, const char *key) {
+    if (root == NULL) {
+        return 0;
+    }
+
+    int cmp = strcmp(key, root->key);
+
+    if (cmp == 0) {
+        return 1;
+        }
+    else if (cmp < 0){
+        return search(root->LC, key);
+        }
+    else {
+        return search(root->RC, key);
+    }
+}
+
+BST deleteNode(BST root, const char *key_data) {
+    
+    if(root==NULL){
+        return root;
+    }
+    if(strcmp(root->key,key_data)>0){
+        root->LC = deleteNode(root->LC, key_data);
+    }
+    else if(strcmp(root->key,key_data)<0){
+        root->RC = deleteNode(root->RC, key_data);
+    }
+    
+    else{
+        if(root->LC==NULL){
+            BST temp = root->RC;
+            free(root);
+            return temp;
+        }else if(root->RC==NULL){
+            BST temp = root->LC;
+            free(root);
+            return temp;
+        }
+        
+    BST temp = minValueNode(root->RC);
+    strcpy(root->key,temp->key);
+    root->RC = deleteNode(root->RC, temp->key);
+  }
+  if(search(root, key_data)==0){
+      printf("Key \"%s\" not found for deletion.", key_data);
+  }
+  return root;
+    }
